@@ -1,6 +1,6 @@
 # GEMINI.md - Instructional Context
 
-This file provides comprehensive context for the Sudharsan Portfolio Clone project. It outlines the project's purpose, technical constraints, and development guidelines.
+This file provides comprehensive context for the taerim portfolio project. It outlines the project's purpose, technical constraints, and development guidelines.
 
 ## Project Overview
 

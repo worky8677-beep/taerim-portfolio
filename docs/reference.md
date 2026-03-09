@@ -1,4 +1,4 @@
-# HTML Structure Reference - Sudharsan Portfolio Clone
+# HTML Structure Reference - taerim portfolio
 
 This document outlines the semantic HTML structure and class naming conventions used to recreate the "My Space" portfolio design.
 
