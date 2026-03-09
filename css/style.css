@@ -6,21 +6,35 @@
     --text-muted: #666666;
     --font-heading: 'Gmarket Sans', sans-serif;
     --font-body: 'Pretendard Std', sans-serif;
+    --section-spacing: 12rem; /* 간격을 10rem에서 12rem으로 확대 */
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
+/* Scroll Reveal Initial State */
+section, 
+.about-card, 
+.project-card, 
+.creation-card,
+.folder-container {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-body {
-    background-color: var(--bg-primary);
-    color: var(--text-dark);
-    font-family: var(--font-body);
-    line-height: 1.5;
-    overflow-x: hidden;
+/* Scroll Reveal Visible State */
+section.visible, 
+.about-card.visible, 
+.project-card.visible, 
+.creation-card.visible,
+.folder-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Common Section Spacing */
+section, 
+.folder-container, 
+.software-marquee {
+    margin-bottom: var(--section-spacing);
 }
 
 /* Top Marquee */
@@ -192,11 +206,11 @@ body {
     50% { opacity: 1; transform: scale(1.2); }
 }
 
-/* About Card */
+/* Content Layout */
 .content-wrapper {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 4rem 2rem;
+    padding: 0 2rem;
 }
 
 .about-section {
@@ -272,7 +286,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 6rem 0;
 }
 
 .folder-icon {
@@ -353,7 +366,113 @@ body {
     gap: 0.5rem;
 }
 
-/* Creations */
+/* Resume Section */
+.resume-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+}
+
+.resume-item {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.resume-item::before {
+    content: '';
+    position: absolute;
+    left: 110px;
+    top: 0;
+    bottom: -2.5rem;
+    width: 1px;
+    background: #eee;
+}
+
+.resume-item:last-child::before {
+    display: none;
+}
+
+.resume-date {
+    min-width: 100px;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding-top: 0.25rem;
+}
+
+.resume-content {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.resume-content::before {
+    content: '';
+    position: absolute;
+    left: -11px;
+    top: 8px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: 2px solid var(--accent-blue);
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.resume-content h3 {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    margin-bottom: 0.25rem;
+}
+
+.company {
+    font-weight: 700;
+    color: var(--accent-blue);
+    margin-bottom: 0.75rem;
+}
+
+.desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Skills Section */
+.skills-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem 4rem;
+}
+
+.skill-item {
+    margin-bottom: 1.5rem;
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    font-family: var(--font-heading);
+}
+
+.skill-bar {
+    width: 100%;
+    height: 12px;
+    background: #f0f0f0;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    width: 0;
+    background: var(--accent-blue);
+    border-radius: 100px;
+    transition: width 1.5s cubic-bezier(0.1, 0, 0.2, 1);
+}
+
+/* Creations Section */
 .creations-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -394,7 +513,6 @@ body {
 
 /* Software Marquee */
 .software-marquee {
-    margin: 8rem 0;
     overflow: hidden;
 }
 
@@ -434,6 +552,7 @@ body {
     padding: 10rem 2rem;
     text-align: center;
     position: relative;
+    margin-top: var(--section-spacing);
 }
 
 .footer::before {
@@ -496,4 +615,7 @@ body {
     .about-card { grid-template-columns: 1fr; }
     .projects-grid { grid-template-columns: 1fr; }
     .creations-grid { grid-template-columns: 1fr 1fr; }
+    .resume-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .resume-item::before { left: 110px; }
+    .skills-container { grid-template-columns: 1fr; }
 }
