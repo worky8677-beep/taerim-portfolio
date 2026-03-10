@@ -1,52 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Custom Cursor (Optional - if needed for Framer feel)
-    // Smooth Scroll for anchor links
+    // 1. 부드러운 스크롤 (내비게이션 링크용)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                const navHeight = document.querySelector('.sticky-nav') ? document.querySelector('.sticky-nav').offsetHeight : 0;
+                window.scrollTo({
+                    top: targetElement.offsetTop - navHeight,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 
-    // Intersection Observer for Scroll Reveals
-    const observerOptions = {
-        threshold: 0.2
-    };
+    // 2. Top 버튼 기능
+    const topBtn = document.getElementById('go-top');
 
+    // 스크롤하면 버튼 보여주기/숨기기
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+            topBtn.style.display = 'block';
+        } else {
+            topBtn.style.display = 'none';
+        }
+    });
+
+    // 클릭하면 맨 위로 이동
+    topBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // 3. 스크롤 애니메이션 (나타나는 효과)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                
-                // If the skills section is visible, animate progress bars
+                // 스킬 섹션이면 게이지 애니메이션 실행
                 if (entry.target.id === 'skills') {
-                    animateSkills();
+                    document.querySelectorAll('.skill-progress').forEach(bar => {
+                        bar.style.width = bar.getAttribute('data-percent') + '%';
+                    });
                 }
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.1 });
 
-    // Elements to observe
-    document.querySelectorAll('section, .about-card, .project-card, .creation-card').forEach(el => {
+    document.querySelectorAll('section, .about-card, .project-card, .creation-card, .folder-container').forEach(el => {
         observer.observe(el);
     });
 
-    // Skill Bar Animation Function
-    function animateSkills() {
-        const progressBars = document.querySelectorAll('.skill-progress');
-        progressBars.forEach(bar => {
-            const percent = bar.getAttribute('data-percent');
-            bar.style.width = percent + '%';
-            bar.classList.add('animate');
-        });
-    }
-
-    // Marquee duplication for seamless loop (if not handled by CSS)
-    const marquees = document.querySelectorAll('.marquee-content');
-    marquees.forEach(marquee => {
-        const content = marquee.innerHTML;
-        marquee.innerHTML = content + content + content + content;
+    // 4. 전광판 효과 (Marquee) 무한 반복
+    document.querySelectorAll('.marquee-content').forEach(marquee => {
+        marquee.innerHTML += marquee.innerHTML + marquee.innerHTML;
     });
 });
