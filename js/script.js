@@ -43,8 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('visible');
                 // 스킬 섹션이면 게이지 애니메이션 실행
                 if (entry.target.id === 'skills') {
-                    document.querySelectorAll('.skill-progress').forEach(bar => {
-                        bar.style.width = bar.getAttribute('data-percent') + '%';
+                    document.querySelectorAll('.skill-progress').forEach(progress => {
+                        const percent = progress.getAttribute('data-percent');
+                        const circumference = 2 * Math.PI * 45; // 282.74... (반지름 45 기준)
+                        const offset = circumference - (percent / 100 * circumference);
+                        progress.style.strokeDashoffset = offset;
                     });
                 }
             }
